@@ -11,7 +11,9 @@ public class BookClientApplication {
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(BookClientApplication.class, args);
 		BookRestController bookRestController = context.getBean(BookRestController.class);
-		bookRestController.getBook();
+		//bookRestController.getBook_V1();
+		//bookRestController.getBook_V2();
+		bookRestController.getBook_V3();
 	}
 
 }
