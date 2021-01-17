@@ -4,7 +4,7 @@
 
 ### 1. book-service (Internal Microservice)
 
-- Default Port: 8501
+- Port: 8501
 - To create multiple instances running in different `port`:
 ```
 ./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8502
@@ -13,7 +13,7 @@
   - netflix-eureka-client
 
 ### 2. gateway (Microservice exposed to outside world)
-- Default Port: 8511
+- Port: 8511
 - Features:
   - netflix-eureka-client
   - netflix-ribbon
@@ -21,10 +21,16 @@
   - openfeign
 
 ### 3. eureka-server (Service Registration and Discovery)
-- Default Port: 8600
-- Eureka: http://localhost:8600/
+- Port: 8761
+- Eureka: http://localhost:8761/
 - Features:
-    - netflix-eureka-server
+  - netflix-eureka-server
+  
+### 4. zuul-service (Gateway to internal services)
+- Port: 8611
+- Features:
+  - netflix-eureka-client
+  - netflix-zuul
 
 ## Resources:
  - https://www.javainuse.com/spring/spring_eurekaregister
