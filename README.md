@@ -10,7 +10,7 @@
 ./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8502
 ```
 
-### 2. book-client
+### 2. gateway
 - Default Port: 8511
 
 ### 3. eureka-server
