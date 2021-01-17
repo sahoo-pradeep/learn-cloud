@@ -33,6 +33,9 @@ public class ClientBookController {
     @Value("${book-service}")
     private String bookService;
 
+    @Value("${zuul-service}")
+    private String zuulService;
+
     @GetMapping("/book/v1/{id}")
     public String getBook_V1(@PathVariable int id) {
         //Using hardcoded service url
@@ -57,7 +60,6 @@ public class ClientBookController {
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, getHeaders(), String.class);
         return response.getBody();
-
     }
 
     @GetMapping("/book/v3/{id}")
@@ -104,6 +106,22 @@ public class ClientBookController {
 
         return httpBookService.getBook(id);
     }
+
+    @GetMapping("/book/v6/{id}")
+    public String getBook_V6(@PathVariable int id) {
+        //Using Zuul
+        RestTemplate restTemplate = new RestTemplate();
+
+        List<ServiceInstance> instances = discoveryClient.getInstances(zuulService);
+        ServiceInstance serviceInstance = instances.get(0);
+        String baseUrl = serviceInstance.getUri().toString();
+        System.out.println("(V6) Base Url: " + baseUrl);
+        String url = baseUrl + "/book-service" + "/book/v1/" + id;
+
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, getHeaders(), String.class);
+        return response.getBody();
+    }
+
 
     private HttpEntity<?> getHeaders() {
         HttpHeaders headers = new HttpHeaders();
