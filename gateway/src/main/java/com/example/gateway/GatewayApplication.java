@@ -1,15 +1,15 @@
-package com.example.bookclient;
+package com.example.gateway;
 
-import com.example.bookclient.controller.BookRestController;
+import com.example.gateway.controller.BookRestController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-public class BookClientApplication {
+public class GatewayApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(BookClientApplication.class, args);
+		ApplicationContext context = SpringApplication.run(GatewayApplication.class, args);
 		BookRestController bookRestController = context.getBean(BookRestController.class);
 		//bookRestController.getBook_V1();
 		//bookRestController.getBook_V2();
