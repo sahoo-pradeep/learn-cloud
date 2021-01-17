@@ -13,13 +13,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
-public class BookRestController {
+public class ClientBookController {
 
     private final DiscoveryClient discoveryClient;
     private final LoadBalancerClient loadBalancerClient;
 
     @Autowired
-    public BookRestController(DiscoveryClient discoveryClient, LoadBalancerClient loadBalancerClient) {
+    public ClientBookController(DiscoveryClient discoveryClient, LoadBalancerClient loadBalancerClient) {
         this.discoveryClient = discoveryClient;
         this.loadBalancerClient = loadBalancerClient;
     }
