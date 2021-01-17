@@ -18,6 +18,7 @@
   - netflix-eureka-client
   - netflix-ribbon
   - netflix-hystrix
+  - openfeign
 
 ### 3. eureka-server (Service Registration and Discovery)
 - Default Port: 8600
