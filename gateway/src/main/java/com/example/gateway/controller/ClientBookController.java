@@ -1,5 +1,8 @@
 package com.example.gateway.controller;
 
+import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -66,17 +69,26 @@ public class ClientBookController {
     }
 
     @GetMapping("/book/v4/{id}")
+    @HystrixCommand(fallbackMethod = "getFallBackBook")
     public String getBook_V4(@PathVariable int id) {
         //Using Eureka + Ribbon + Hystrix (server side)
+
+        System.out.println("getBook_V4 with id: " + id);
         RestTemplate restTemplate = new RestTemplate();
 
         ServiceInstance serviceInstance = loadBalancerClient.choose("book-service"); //Random available services
         String baseUrl = serviceInstance.getUri().toString();
         System.out.println("(V4) Base Url: " + baseUrl);
-        String url = baseUrl + "/book/v2/" + id;
+        String url = baseUrl + "/book/v1/" + id;
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, getHeaders(), String.class);
         return response.getBody();
+    }
+
+    // When there is an exception, return this Object
+    public String getFallBackBook(int id) {
+        System.out.println("getFallBackBook() with id: " + id);
+        return "Book not available";
     }
 
     private HttpEntity<?> getHeaders() {
